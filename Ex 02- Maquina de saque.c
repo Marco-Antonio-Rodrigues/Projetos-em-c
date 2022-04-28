@@ -67,5 +67,4 @@ int main(){
 // notas de R$5,00:   1
 // notas de R$2,00:   1
 
-//teste
 
