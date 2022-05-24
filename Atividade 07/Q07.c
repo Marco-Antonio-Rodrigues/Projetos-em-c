@@ -29,7 +29,7 @@ int main(){
     icms = 0.3 * vf;
     vf = vf + icms;
 
-    printf("\nValor a pagar: %f",vf);
+    printf("\nValor a pagar: %.2f",vf);
 
     return 0;
 }
