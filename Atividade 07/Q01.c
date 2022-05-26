@@ -26,7 +26,7 @@ int main()
     x = pow(a,b)-(pow(c,d)+e);
     printf("\nx = %f", x);
 
-    x = pow(a,b*c*d);
+    x = pow(a,pow(b,pow(c,d)));
     printf("\nx = %f", x);
 
     return 0;
