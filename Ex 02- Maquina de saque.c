@@ -1,3 +1,5 @@
+// Por: Marco Antonio Rodrigues Gomes de Souza
+// Descrição: O programa simula uma máquina de saque de banco.
 #include <stdio.h>
 
 int main()
