@@ -19,7 +19,7 @@ int main(){
       x[z]=0;
     }
     z = y = 0;
-		printf("Digite -1 para encerrar\nDigite qualquer numero de 0 e 5000:\n");
+		printf("Digite -1 para encerrar\nDigite qualquer numero de 0 a 5000:\n");
     while (y != -1){// laco onde adiciona os numeros
       scanf("%i",&y);
 			if(y != -1){
