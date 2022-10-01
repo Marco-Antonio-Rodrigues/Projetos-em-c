@@ -84,6 +84,7 @@ int remover(int pos){
             lixo->prox->ant = lixo->ant; 
             free(lixo);
         }
+        tam--;
     }
 
     return 0;
@@ -103,7 +104,6 @@ int main(){
     adicionar(20,2);
     adicionar(25,3);
     remover(1);
-
     imprimir();
 return 0; 
 }
