@@ -1,22 +1,28 @@
-#include "teste.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-int FunctionComparador(void* x, void* y){
-	if(x > y){
-		return -1;
-	}else if(x == y) {
-		return 0;
-	}else{
-		return 1;
-	}
+void trocar(void *a, void *b){
+  int size = sizeof(a);
+  void *aux = malloc(size);
+  memcpy(aux,a,size);
+  memcpy(a,b,size);
+  memcpy(b,aux,size);
+  aux = NULL;
+  free(aux);
 }
 
-VETORORD* VETORD_create(int n, COMP* compara){
-	VETORORD *new_vetorord = malloc(sizeof(VETORORD));
-	new_vetorord->N = n;
-	new_vetorord->P = 0;
-	new_vetorord->elems = malloc(sizeof(int)*n); //cria um vetor de ponteiros de tamanho n(trocar)
-	new_vetorord->comparador = FunctionComparador;
-	return new_vetorord;
+int main(){
+	char vetor1[] = "bb";
+	char vetor2[] = "aa";
+	char vetor3[] = "c";
+
+  void *pont1 = vetor1;
+  void *pont2 = vetor2;
+
+  printf("aqui: %s\n",vetor1);
+  printf("aqui: %s\n",vetor2);
+  trocar(pont1,pont2);
+  printf("aqui: %s\n",vetor1);
+  printf("aqui: %s\n",vetor2);
 }
-
-
