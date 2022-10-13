@@ -67,22 +67,5 @@ void PrintVetor(VETORORD *vetor){ //pode apagar
 }
 
 int main(){//problema ao usar float
-	VETORORD *novovetor = VETORD_create(4,FunctionComparador);
-	// char vetor1[] = "abacaxi";
-	// char vetor2[] = "bola";
-	// char vetor3[] = "casa";
-	// int n = 1;
-	float n = 1.1;
-	void *pont;
-	pont = n;
 
-	VETORD_add(novovetor,pont);
-	// VETORD_add(novovetor,112);
-
-	// VETORD_add(novovetor,vetor2);
-	// VETORD_add(novovetor,vetor1);
-
-	// VETORD_remove(novovetor);
-
-	PrintVetor(novovetor);
 }
