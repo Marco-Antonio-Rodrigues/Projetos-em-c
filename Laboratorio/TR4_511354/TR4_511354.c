@@ -17,9 +17,9 @@ VETORORD* VETORD_create(int n, COMP* compara){//vetor ordenador na ordem crescen
 	VETORORD *new_vetorord = malloc(sizeof(VETORORD));
 	new_vetorord->N = n;
 	new_vetorord->P = 0;
-	new_vetorord->elems = malloc(sizeof(new_vetorord->elems)*n);
-	new_vetorord->comparador = FunctionComparador;
-	for(int i=0;i<new_vetorord->N;i++){
+	new_vetorord->elems = malloc(sizeof(void*)*n);
+	new_vetorord->comparador = compara;
+	for(int i=0;i<new_vetorord->N;i++){// garantindo que aponta para NULL
 		new_vetorord->elems[i]=NULL;
 	}
 	return new_vetorord;
@@ -33,7 +33,8 @@ void VETORD_add(VETORORD* vetor, void* newelem){
 		}else{
 			vetor->elems[vetor->P] = newelem;		
 			for (int i = vetor->P; i >= 1; i--){
-				if(FunctionComparador(vetor->elems[i-1],vetor->elems[i])==-1){
+				if((FunctionComparador(vetor->elems[i-1],vetor->elems[i]))==-1){
+					printf("\naqui");
 					void *aux = vetor->elems[i];
 					vetor->elems[i] = vetor->elems[i-1];
 					vetor->elems[i-1] = aux;
@@ -60,12 +61,30 @@ void PrintVetor(VETORORD *vetor){ //pode apagar
 	printf("Tamanho do vetor: %i, Quantidade de elementos: %i\n",vetor->N,vetor->P);
 	if(vetor->P != 0){
 		for(int i=0;i<vetor->P;i++){
-			printf("vetor[%i] == %f",i,vetor->elems[i]);
+			printf("vetor[%i] == %c",i,vetor->elems[i]);
 			printf("\n");
 		}
 	}
 }
 
 int main(){//problema ao usar float
+	VETORORD *newvetor = VETORD_create(4,FunctionComparador);
+	char lista1[] = "a";
+	char lista2[] = "b";
+	char lista3[] = "c";
+	char lista4[] = "d";
 
+	void *pont1 = lista3;
+	VETORD_add(newvetor,"c");
+
+	pont1 = lista1;
+	VETORD_add(newvetor,"a");
+
+	pont1 = lista2;
+	VETORD_add(newvetor,"b");
+
+	pont1 = lista4;
+	VETORD_add(newvetor,"d");
+
+	PrintVetor(newvetor);
 }
