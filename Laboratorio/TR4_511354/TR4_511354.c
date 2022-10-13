@@ -61,7 +61,7 @@ void PrintVetor(VETORORD *vetor){ //pode apagar
 	printf("Tamanho do vetor: %i, Quantidade de elementos: %i\n",vetor->N,vetor->P);
 	if(vetor->P != 0){
 		for(int i=0;i<vetor->P;i++){
-			printf("vetor[%i] == %c",i,vetor->elems[i]);
+			printf("vetor[%i] == %c",i,*(char*)vetor->elems[i]);
 			printf("\n");
 		}
 	}
@@ -75,16 +75,16 @@ int main(){//problema ao usar float
 	char lista4[] = "d";
 
 	void *pont1 = lista3;
-	VETORD_add(newvetor,"c");
+	VETORD_add(newvetor,pont1);
 
 	pont1 = lista1;
-	VETORD_add(newvetor,"a");
+	VETORD_add(newvetor,pont1);
 
 	pont1 = lista2;
-	VETORD_add(newvetor,"b");
+	VETORD_add(newvetor,pont1);
 
 	pont1 = lista4;
-	VETORD_add(newvetor,"d");
+	VETORD_add(newvetor,pont1);
 
 	PrintVetor(newvetor);
 }
