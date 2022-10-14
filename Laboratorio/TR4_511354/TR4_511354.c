@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include "ordvetor.h"
 
-int FunctionComparador(void* x, void* y){
-	if(x > y){
-		return -1;
-	}else if(x == y) {
+int FunctionComparador(void* x, void* y){//ok
+	if(*(int*)x <*(int*)y){
+		return 1;
+	}else if(*(int*)x == *(int*)y) {
 		return 0;
 	}else{
-		return 1;
+		return -1;
 	}
 }
 
@@ -32,7 +32,7 @@ void VETORD_add(VETORORD* vetor, void* newelem){
 		}else{ // adiciona ordenado
 			vetor->elems[vetor->P] = newelem;		
 			for (int i = vetor->P; i >= 1; i--){
-				if((vetor->comparador(vetor->elems[i-1],vetor->elems[i]))==-1){
+				if((vetor->comparador((int*)vetor->elems[i-1],(int*)vetor->elems[i]))==-1){
 					void *aux = vetor->elems[i];
 					vetor->elems[i] = vetor->elems[i-1];
 					vetor->elems[i-1] = aux;
