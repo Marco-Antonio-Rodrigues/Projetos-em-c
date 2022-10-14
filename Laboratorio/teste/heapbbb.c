@@ -36,39 +36,29 @@ void corrige_acima(Heap* heap, int pos) {
 
 void heap_insere(Heap* heap, int prioridade) {
  if ( heap->pos < heap->max ) {
- heap->prioridade[heap->pos]=prioridade;
- corrige_acima(heap,heap->pos);
+  heap->prioridade[heap->pos]=prioridade;
+  // corrige_acima(heap,heap->pos);
+  int pai;
+  int pos = (int)heap->pos;
+ while (pos > 0) {
+  pai = (pos-1)/2;
+  if (heap->prioridade[pai] > heap->prioridade[pos]){
+    // troca(pos,pai,heap->prioridade);
+    int aux = heap->prioridade[pos];
+    heap->prioridade[pos] = heap->prioridade[pai];
+    heap->prioridade[pai] = aux;
+    //.
+  }else{
+    break;
+  }
+  pos=pai;
+ }
+ //.
  heap->pos++;
  }
  else
  printf("Heap CHEIO!\n");
 }
-
-// void heap_insere(Heap* heap, int prioridade) {
-//  if ( heap->pos < heap->max ) {
-//   heap->prioridade[heap->pos]=prioridade;
-//   // corrige_acima(heap,heap->pos);
-//   int pai;
-//   int pos = (int)heap->pos;
-//  while (pos > 0) {
-//   pai = (pos-1)/2;
-//   if (heap->prioridade[pai] < heap->prioridade[pos]){
-//     // troca(pos,pai,heap->prioridade);
-//     int aux = heap->prioridade[pos];
-//     heap->prioridade[pos] = heap->prioridade[pai];
-//     heap->prioridade[pai] = aux;
-//     //.
-//   }else{
-//     break;
-//   }
-//   pos=pai;
-//  }
-//  //.
-//  heap->pos++;
-//  }
-//  else
-//  printf("Heap CHEIO!\n");
-// }
 
 
 static void corrige_abaixo(int *prios, int atual, int tam){
@@ -137,28 +127,22 @@ void PrintHeap(Heap *heap){
 }
 int main(){
   Heap *newheap = heap_cria(20);
+  heap_insere(newheap,9);
+  heap_insere(newheap,7);
+  heap_insere(newheap,2);
+  heap_insere(newheap,6);
+  heap_insere(newheap,4);
   heap_insere(newheap,1);
-  heap_insere(newheap,3);
+  heap_insere(newheap,9);
+  heap_insere(newheap,7);
   heap_insere(newheap,2);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-    heap_insere(newheap,1);
-  heap_insere(newheap,3);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-    heap_insere(newheap,1);
-  heap_insere(newheap,3);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-    heap_insere(newheap,1);
-  heap_insere(newheap,3);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-  heap_insere(newheap,2);
-  // printf("\n%i",newheap->prioridade[0]);
+  heap_insere(newheap,6);
+  heap_insere(newheap,4);
+  heap_insere(newheap,1);
+ 
+
   PrintHeap(newheap);
+  // printf("\n%i",newheap->prioridade[0]);
   // heap_remove(newheap);
   // printf("\n%i",newheap->prioridade[0]);
   return 0;

@@ -1,7 +1,7 @@
 #include "heap.h"
 #include <math.h>
 
-int FunctionComparador(void* x, void* y){
+int FunctionComparador(void* x, void* y){//ok
 	if(*(int*)x <*(int*)y){
 		return 1;
 	}else if(*(int*)x == *(int*)y) {
@@ -26,32 +26,27 @@ HEAP* HEAP_create(int n, COMP* compara){//ok
 // Insira o elemento no final do heap e faça-o “subir” até a
 // posição correta
 void HEAP_add(HEAP* heap, void* newelem){
-  if(heap->P < heap->N){//verifica se o heap nao esta cheio
-		heap->elems[heap->P] = newelem;	// ate aqui ta certo	
-		//  corrige_acima(heap,heap->pos);
-		int pai;
-		int pos = (int)heap->P;
-		while (pos > 0) {
-			pai = (pos-1)/2;
-			if (*(int*)heap->elems[pai] > *(int*)heap->elems[pos]){
-				// troca(pos,pai,heap->prioridade);
-				printf("\nentrou: %i  %i",*(int*)heap->elems[pos],*(int*)heap->elems[pai]);
-				void* aux = heap->elems[pos];
-				heap->elems[pos] = heap->elems[pai];
-				heap->elems[pai] = aux;
-				//.
-			}else{
-				break;
-			}
-			pos = pai;//parte errada
-		}
-		//.
+  	if(heap->P < heap->N){//verifica se o heap nao esta cheio
+		if (heap->P == 0){ //caso o heap ainda esteja vazio
+			heap->elems[0] = newelem;
 			heap->P++;
-	}else{
-		printf("ERRO! HEAP CHEIO.");
+		}else{ // adiciona ordenado
+			heap->elems[heap->P] = newelem;	// ate aqui ta certo	
+			for (int i = heap->P; i >= 1; i--){
+				if((heap->comparador(heap->elems[i-1],heap->elems[i]))==-1){
+					void *aux = heap->elems[i];
+					heap->elems[i] = heap->elems[i-1];
+					heap->elems[i-1] = aux;
+				}else{
+					break;
+				}	
+		}
+		heap->P++;
 	}
+}else{
+	printf("ERRO! HEAP CHEIO.");
 }
-
+}
 
 // Retira-se sempre a raiz
 // Coloque na raiz o último elemento do heap e faça-o
@@ -105,7 +100,7 @@ int elevado(int a,int b){
 void PrintHeap(HEAP *heap){
 	printf("tamanho:%i numero de elementos: %i\n",heap->N,heap->P);
 	int c = 0;
-  for (int i=0;i<10;i++){
+  for (int i=0;i<3;i++){
 		printf("nivel %i:",i);
 		for (int j = 1; j <= elevado(2,i); j++){
 			if(c<heap->P){
@@ -117,57 +112,46 @@ void PrintHeap(HEAP *heap){
 	}
 	printf("vetor:");
 	for (int i = 0; i < heap->P; i++){
-		printf("v[%i]=%i  ",i,*(int*)heap->elems[i]);
+		printf("  %i",*(int*)heap->elems[i]);
 	}
 	
 		printf("\n\n\n");
 }
 
 int main(){
-  HEAP *novoheap = HEAP_create(50,FunctionComparador);
-  int n1 = 9;
-  int n2 = 7;
+  HEAP *novoheap = HEAP_create(8,FunctionComparador);
+  int n1 = 1;
+  int n2 = 4;
   int n3 = 2;
 	int n4 = 6;
-  int n5 = 4;
-  int n6 = 1;
-  void *pont;
-	pont = &n1;
+  int n5 = 7;
+  int n6 = 9;
+  void *pont = &n1;
   HEAP_add(novoheap,pont);
 
   pont = &n2;
   HEAP_add(novoheap,pont);
 
   pont = &n3;
-  HEAP_add(novoheap,pont);//quando comentei aumentou dois
+  HEAP_add(novoheap,pont);
 
 	pont = &n4;
-  HEAP_add(novoheap,pont);//n serve
+  HEAP_add(novoheap,pont);
+
+
+	PrintHeap(novoheap);
+	HEAP_remove(novoheap);
+	HEAP_remove(novoheap);
+	PrintHeap(novoheap);
 
   pont = &n5;
-  HEAP_add(novoheap,pont);// n serve
+  HEAP_add(novoheap,pont);
 
 	pont = &n6;
   HEAP_add(novoheap,pont);
-
-	pont = &n1;
-  HEAP_add(novoheap,pont);
-
-  pont = &n2;
-  HEAP_add(novoheap,pont);
-
-  pont = &n3;
-  HEAP_add(novoheap,pont);//quando comentei aumentou dois
-
-	pont = &n4;
-  HEAP_add(novoheap,pont);//n serve
-
-  pont = &n5;
-  HEAP_add(novoheap,pont);// n serve
-
-	pont = &n6;
-  HEAP_add(novoheap,pont);
-
 	PrintHeap(novoheap);
   return 0;
 }
+
+// 1- criar um heap
+// 2- adicionar itens na ordem correta
