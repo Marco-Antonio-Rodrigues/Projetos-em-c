@@ -48,18 +48,19 @@ static void corrige_abaixo(int *prios, int atual, int tam){
  int pai = atual;
  int filho_esq, filho_dir, filho;
  while (2*pai+1 < tam){
- filho_esq=2*pai+1;
- filho_dir=2*pai+2;
- if (filho_dir >= tam) filho_dir=filho_esq;
- if (prios[filho_esq] > prios[filho_dir])
- filho = filho_esq;
- else
- filho = filho_dir;
- if (prios[pai] < prios[filho])
- troca(pai,filho,prios);
- else
- break;
- pai = filho;
+  filho_esq=2*pai+1;
+  filho_dir=2*pai+2;
+  if (filho_dir >= tam) filho_dir=filho_esq;
+    if (prios[filho_esq] > prios[filho_dir])
+      filho = filho_esq;
+    else
+      filho = filho_dir;
+  if (prios[pai] < prios[filho])
+    troca(pai,filho,prios);
+  else{
+    break;
+  }
+  pai = filho;
  }
 }
 
@@ -80,8 +81,12 @@ int heap_remove(Heap* heap) {
 int main(){
   Heap *newheap = heap_cria(4);
   heap_insere(newheap,1);
+  heap_insere(newheap,3);
   heap_insere(newheap,2);
-  printf("%i",newheap->prioridade[0]);
+  printf("\n%i",newheap->prioridade[0]);
+  heap_remove(newheap);
+  heap_remove(newheap);
+  printf("\n%i",newheap->prioridade[0]);
   return 0;
 }
 

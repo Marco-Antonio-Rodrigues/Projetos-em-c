@@ -23,6 +23,8 @@ HEAP* HEAP_create(int n, COMP* compara){//ok
 	return new_HEAP;
 }
 
+// Insira o elemento no final do heap e faça-o “subir” até a
+// posição correta
 void HEAP_add(HEAP* heap, void* newelem){
   	if(heap->P < heap->N){//verifica se o heap nao esta cheio
 		if (heap->P == 0){ //caso o heap ainda esteja vazio
@@ -46,13 +48,37 @@ void HEAP_add(HEAP* heap, void* newelem){
 }
 }
 
+// Retira-se sempre a raiz
+// Coloque na raiz o último elemento do heap e faça-o
+// “descer” até a posição correta
 void* HEAP_remove(HEAP* heap){// precisa implementar um mecanismo de reordem
   void *lixo = NULL;
 	if(heap->P > 0){
 		lixo = heap->elems[0];
 		heap->elems[0] = heap->elems[heap->P-1];
 		heap->elems[heap->P-1] = NULL;
-		heap->P--;
+		heap->P--;//ate aqui ta certo
+		int pai = 0,filho_esq, filho_dir, filho;
+		while ((2*pai+1) < heap->P){
+			filho_esq=2*pai+1;
+ 			filho_dir=2*pai+2;
+			if (filho_dir >= heap->P){
+				filho_dir=filho_esq;
+			}//ok ate aqui
+			if (*(int*)heap->elems[filho_esq] < *(int*)heap->elems[filho_dir]){//alt
+   			filho = filho_esq; 
+			}else{
+				filho = filho_dir;
+			}
+			 if (heap->elems[pai] > heap->elems[filho]){
+					void *aux = heap->elems[pai];
+					heap->elems[pai] = heap->elems[filho];
+					heap->elems[filho] = aux;
+			 } else{
+  				break;
+			 }
+			 pai = filho;
+		}  
 		return lixo;
 	}else{
 		printf("ERRO! HEAP VAZIO");
@@ -60,9 +86,40 @@ void* HEAP_remove(HEAP* heap){// precisa implementar um mecanismo de reordem
 	}
 }
 
+//apagar
+int elevado(int a,int b){
+    if(b == 0){
+        return 1;
+    }else{
+        b = b - 1;
+        a = a * elevado(a,b);
+				return a;
+    }
+}
+
+void PrintHeap(HEAP *heap){
+	printf("tamanho:%i numero de elementos: %i\n",heap->N,heap->P);
+	int c = 0;
+  for (int i=0;i<3;i++){
+		printf("nivel %i:",i);
+		for (int j = 1; j <= elevado(2,i); j++){
+			if(c<heap->P){
+			printf("\t%i",*(int*)heap->elems[c]);
+			c++;
+			}
+		}
+		printf("\n");
+	}
+	printf("vetor:");
+	for (int i = 0; i < heap->P; i++){
+		printf("  %i",*(int*)heap->elems[i]);
+	}
+	
+		printf("\n\n\n");
+}
 
 int main(){
-  HEAP *novoheap = HEAP_create(800,FunctionComparador);
+  HEAP *novoheap = HEAP_create(8,FunctionComparador);
   int n1 = 1;
   int n2 = 4;
   int n3 = 2;
@@ -81,17 +138,18 @@ int main(){
 	pont = &n4;
   HEAP_add(novoheap,pont);
 
+
+	PrintHeap(novoheap);
+	HEAP_remove(novoheap);
+	HEAP_remove(novoheap);
+	PrintHeap(novoheap);
+
   pont = &n5;
   HEAP_add(novoheap,pont);
 
 	pont = &n6;
   HEAP_add(novoheap,pont);
-
-	printf("\nnivel 0:     %i",*(int*)novoheap->elems[0]);
-	printf("\nnivel 1: %i\t%i",*(int*)novoheap->elems[1],*(int*)novoheap->elems[2]);
-	printf("\nnivel 2: %i\t%i\t%i",*(int*)novoheap->elems[3],*(int*)novoheap->elems[4],*(int*)novoheap->elems[5]);
-
-
+	PrintHeap(novoheap);
   return 0;
 }
 
