@@ -68,11 +68,11 @@ static void corrige_abaixo(int *prios, int atual, int tam){
   filho_esq=2*pai+1;
   filho_dir=2*pai+2;
   if (filho_dir >= tam) filho_dir=filho_esq;
-    if (prios[filho_esq] > prios[filho_dir])
+    if (prios[filho_esq] < prios[filho_dir])
       filho = filho_esq;
     else
       filho = filho_dir;
-  if (prios[pai] < prios[filho]){
+  if (prios[pai] > prios[filho]){
     troca(pai,filho,prios);
   }else{
     break;
@@ -128,6 +128,7 @@ void PrintHeap(Heap *heap){
 int main(){
   Heap *newheap = heap_cria(20);
   heap_insere(newheap,9);
+  heap_remove(newheap);
   heap_insere(newheap,7);
   heap_insere(newheap,2);
   heap_insere(newheap,6);
@@ -137,8 +138,10 @@ int main(){
   heap_insere(newheap,7);
   heap_insere(newheap,2);
   heap_insere(newheap,6);
+  heap_remove(newheap);
   heap_insere(newheap,4);
   heap_insere(newheap,1);
+  heap_remove(newheap);
  
 
   PrintHeap(newheap);

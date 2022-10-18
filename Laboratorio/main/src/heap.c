@@ -78,3 +78,35 @@ void* HEAP_remove(HEAP* heap){
 		return lixo;
 	}
 }
+
+int elevado(int a,int b){
+    if(b == 0){
+        return 1;
+    }else{
+        b = b - 1;
+        a = a * elevado(a,b);
+				return a;
+    }
+}
+
+void PrintHeap(HEAP *heap){
+	printf("tamanho:%i numero de elementos: %i\n",heap->N,heap->P);
+	int c = 0;
+  for (int i=0;i<10;i++){
+		printf("nivel %i:",i);
+		for (int j = 1; j <= elevado(2,i); j++){
+			if(c<heap->P){
+			printf("\t%i",*(int*)heap->elems[c]);
+			c++;
+			}
+		}
+		printf("\n");
+	}
+	printf("vetor:");
+	for (int i = 0; i < heap->P; i++){
+		printf("v[%i]=%i  ",i,*(int*)heap->elems[i]);
+	}
+	
+		printf("\n\n\n");
+}
+
