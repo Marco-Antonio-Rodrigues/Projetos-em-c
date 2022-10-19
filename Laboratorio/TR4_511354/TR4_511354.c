@@ -1,16 +1,6 @@
+#include "ordvetor.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "ordvetor.h"
-
-int FunctionComparador(void* x, void* y){//ok
-	if(*(int*)x <*(int*)y){
-		return 1;
-	}else if(*(int*)x == *(int*)y) {
-		return 0;
-	}else{
-		return -1;
-	}
-}
 
 VETORORD* VETORD_create(int n, COMP* compara){//vetor ordenador na ordem crescente
 	VETORORD *new_vetorord = malloc(sizeof(VETORORD));
@@ -32,7 +22,7 @@ void VETORD_add(VETORORD* vetor, void* newelem){
 		}else{ // adiciona ordenado
 			vetor->elems[vetor->P] = newelem;		
 			for (int i = vetor->P; i >= 1; i--){
-				if((vetor->comparador((int*)vetor->elems[i-1],(int*)vetor->elems[i]))==-1){
+				if((vetor->comparador(vetor->elems[i-1],vetor->elems[i]))==1){//aqui
 					void *aux = vetor->elems[i];
 					vetor->elems[i] = vetor->elems[i-1];
 					vetor->elems[i-1] = aux;
@@ -45,7 +35,7 @@ void VETORD_add(VETORORD* vetor, void* newelem){
 }
 }
 
-void* VETORD_remove(VETORORD* vetor){
+void* VETORD_remove(VETORORD* vetor){//apaga o primeiro elemento e empurra o vetor
 	void *lixo = vetor->elems[0];
 	for (int i = 0; i < vetor->P-1; i++){
 		vetor->elems[i]=vetor->elems[i+1];

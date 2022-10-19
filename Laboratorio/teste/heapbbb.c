@@ -86,10 +86,31 @@ int heap_remove(Heap* heap) {
  int topo = heap->prioridade[0];
  heap->prioridade[0] = heap->prioridade[heap->pos-1];
  heap->pos--;
- corrige_abaixo(heap->prioridade, 0, heap->pos);
- return topo;
+//  corrige_abaixo(heap->prioridade, 0, heap->pos);
+  int pai = 0;
+ int filho_esq, filho_dir, filho;
+ while (2*pai+1 < heap->pos){
+  filho_esq=2*pai+1;
+  filho_dir=2*pai+2;
+  if (filho_dir >= heap->pos) filho_dir=filho_esq;
+    if (heap->prioridade[filho_esq] < heap->prioridade[filho_dir])
+      filho = filho_esq;
+    else
+      filho = filho_dir;
+  if (heap->prioridade[pai] > heap->prioridade[filho]){
+    // troca(pai,filho,heap->prioridade);
+      int aux = heap->prioridade[pai];
+      heap->prioridade[pai] = heap->prioridade[filho];
+      heap->prioridade[filho] = aux;
+    // 
+  }else{
+    break;
+  }
+  pai = filho;
  }
- else {
+// 
+ return topo;
+ }else {
  printf("Heap VAZIO!");
  return -1;
  }
@@ -136,11 +157,7 @@ int main(){
   heap_insere(newheap,1);
   heap_insere(newheap,9);
   heap_insere(newheap,7);
-  heap_insere(newheap,2);
   heap_insere(newheap,6);
-  heap_remove(newheap);
-  heap_insere(newheap,4);
-  heap_insere(newheap,1);
   heap_remove(newheap);
  
 

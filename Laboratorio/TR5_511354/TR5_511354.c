@@ -1,14 +1,6 @@
 #include "heap.h"
-
-int FunctionComparador(void* x, void* y){
-	if(*(int*)x <*(int*)y){
-		return 1;
-	}else if(*(int*)x == *(int*)y) {
-		return 0;
-	}else{
-		return -1;
-	}
-}
+#include <stdio.h>
+#include <stdlib.h>
 
 HEAP* HEAP_create(int n, COMP* compara){
   HEAP *new_HEAP = malloc(sizeof(HEAP));
@@ -24,12 +16,12 @@ HEAP* HEAP_create(int n, COMP* compara){
 
 void HEAP_add(HEAP* heap, void* newelem){
   if(heap->P < heap->N){//verifica se o heap nao esta cheio
-		heap->elems[heap->P] = newelem;	// insera no final do heap/vetor
+		heap->elems[heap->P] = newelem;	// insere no final do heap/vetor
 		int pai;
 		int pos = (int)heap->P;
 		while (pos > 0) {
 			pai = (pos-1)/2;
-			if (*(int*)heap->elems[pai] > *(int*)heap->elems[pos]){
+			if (((heap->comparador)(heap->elems[pai] ,heap->elems[pos])) == 1){
 				void* aux = heap->elems[pos];
 				heap->elems[pos] = heap->elems[pai];
 				heap->elems[pai] = aux;
@@ -51,7 +43,8 @@ void* HEAP_remove(HEAP* heap){
 		heap->elems[0] = heap->elems[heap->P-1];
 		heap->elems[heap->P-1] = NULL;
 		heap->P--;
-		int pai = 0,filho_esq, filho_dir, filho;
+		int pai = 0;
+		int filho_esq, filho_dir, filho;
 		while ((2*pai+1) < heap->P){
 			filho_esq=2*pai+1;
  			filho_dir=2*pai+2;
@@ -63,10 +56,11 @@ void* HEAP_remove(HEAP* heap){
 			}else{
 				filho = filho_dir;
 			}
-			 if (heap->elems[pai] > heap->elems[filho]){
+			 if (((heap->comparador)(heap->elems[pai],heap->elems[filho])) == 1){
 					void *aux = heap->elems[pai];
 					heap->elems[pai] = heap->elems[filho];
 					heap->elems[filho] = aux;
+					printf("\n%i\n",*(int*)aux);
 			 } else{
   				break;
 			 }
@@ -78,3 +72,5 @@ void* HEAP_remove(HEAP* heap){
 		return lixo;
 	}
 }
+
+
