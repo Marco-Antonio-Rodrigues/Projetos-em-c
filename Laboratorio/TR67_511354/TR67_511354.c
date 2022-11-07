@@ -28,22 +28,56 @@ Set *emptySet(){ //cria um conjunto vazio
   return new_set;
 }
 
-
-int main(){
-  FILE *file = fopen("teste.txt","r");
-  Set *conjunto = readSet(file);
-  printf("%i\n",conjunto->number_elems);
-  printf("%i\n",conjunto->value_max);
-  printf("%f\n",conjunto->density);
-  printf("%i\n",conjunto->set[0]);
-  printf("%i\n",conjunto->set[1]);
-
-  for(int z=0;z<=conjunto->number_elems/32+1;z++){		// laco para imprimir todos os numeros digitados
+void writeSet(FILE *write, Set *read){
+  fprintf(write,"%i",read->number_elems);
+  fprintf(write,"\n%i",read->value_max);
+  fprintf(write,"\n%f",read->density);
+  for(int z=0;z<=read->number_elems/32+1;z++){		// laco para imprimir todos os numeros digitados
     for(int y=0;y<32;y++){
-      if((conjunto->set[z]&(1<<y)) != 0){
-        printf("\n%i",((z*32)+y));
+      if((read->set[z]&(1<<y)) != 0){
+        fprintf(write,"\n%i",((z*32)+y));
       }
     }
   }
+}
+
+void unionSet(Set *write,Set *read1,Set *read2){
+  int limit;
+  if(read1->value_max >= read2->value_max){
+    write->value_max = read1->value_max;
+    limit = read2->value_max;
+  }else{
+    write->value_max = read2->value_max;
+    limit = read1->value_max;
+  }
+  //ate aqui ok -- pegamos o valor maximo
+  int i;
+  for(i = 0;i<=limit/32;i++){
+    write->set[i] = read1->set[i] | read2->set[i];
+  }
+  int some;
+  for(int c = 0;c<32;c++){
+    if((write->set[i*32] & (1<<c))== 1){
+      some++;
+    }
+  }
+  write->number_elems = ((i*32)-1)+some;
+}
+
+int main(){
+  FILE *read = fopen("teste.txt","r");
+  FILE *write = fopen("escreva.txt","w");
+  Set *conjunto1 = readSet(read);
+  Set *conjunto2 = readSet(read);
+  Set *conjunto_uniao = emptySet();
+  writeSet(write,conjunto_uniao);
+
+  // for(int z=0;z<=conjunto->number_elems/32+1;z++){		// laco para imprimir todos os numeros digitados
+  //   for(int y=0;y<32;y++){
+  //     if((conjunto->set[z]&(1<<y)) != 0){
+  //       printf("\n%i",((z*32)+y));
+  //     }
+  //   }
+  // }
   return 0;
 }
