@@ -8,7 +8,7 @@ Set *readSet(FILE *read){//ok
   fscanf(read,"%d",&new_set->number_elems);
   fscanf(read,"%d",&new_set->value_max);
   fscanf(read,"%f",&new_set->density);
-  new_set->set = (unsigned long long int*)malloc(sizeof(unsigned long long int)*(1+(new_set->value_max/64)));
+new_set->set = (unsigned long long int*)malloc(sizeof(unsigned long long int)*(1+(new_set->value_max/64)));
   for(aux=0;aux<=new_set->value_max/64;aux++){//setando valores para garantir que sao zeros
     new_set->set[aux]= 0;
   }
@@ -59,7 +59,7 @@ void unionSet(Set *write,Set *read1,Set *read2){
     if(read1->value_max >= read2->value_max){//read1 tem o valor maximo
       write->value_max = read1->value_max;
       write->set = malloc(sizeof(unsigned long long int)*(1+(read1->value_max/64)));
-      for(aux = 0;aux<=read2->value_max/64; aux++){// adiciona os valores restantes ao write a partir do read1
+      for(aux = 0;aux<=read2->value_max/64; aux++){// adiciona os valores ao write a partir do read1 e read2
         write->set[aux] = read1->set[aux] | read2->set[aux];
       }
       for(aux = read2->value_max/64 ;aux<=read1->value_max/64; aux++){// adiciona os valores restantes ao write a partir do read1
@@ -131,35 +131,4 @@ void intersecSet(Set *write,Set *read1,Set *read2){
     write->density = 0;
     write->set = 0;
   }
-}
-
-void printfSet(Set *read){
-  printf("\n%i",read->number_elems);
-  printf("\n%i",read->value_max);
-  printf("\n%f",read->density);
-  if(read->number_elems != 0){
-    for(int z=0;z<=read->value_max/64+1;z++){		// laco para imprimir todos os numeros digitados
-      for(int y=0;y<64;y++){
-        if((read->set[z]&((unsigned long long int)1<<y)) != 0){
-          printf("\n%i",((z*64)+y));
-        }
-      }
-    }
-  } 
-}
-
-int main(){
-  FILE *read1 = fopen("conjunto1.txt","r");
-  FILE *read2 = fopen("conjunto2.txt","r");
-  FILE *write = fopen("escreva.txt","w");
-  Set *conjunto1 = readSet(read1);
-  Set *conjunto2 = readSet(read2);
-  Set *conj_uniao = emptySet();
-  // unionSet(conj_uniao,conjunto1,conjunto2);
-  intersecSet(conj_uniao,conjunto1,conjunto2);
-  writeSet(write,conj_uniao); //ok
-  printfSet(conj_uniao);
-
-
-  return 0;
 }

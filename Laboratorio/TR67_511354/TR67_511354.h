@@ -31,8 +31,5 @@ void unionSet(Set *write,Set *read1,Set *read2);
 // Compara os arquivos read1 e read2 e escreve a interseccao no arquivo write
 void intersecSet(Set *write,Set *read1,Set *read2);
 
-// imprime um struct set
-void printfSet(Set *read);
-
 
 #endif

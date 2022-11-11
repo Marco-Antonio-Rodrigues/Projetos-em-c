@@ -1,7 +1,7 @@
 #include "TR67_511354.h"
 #include <stdio.h>
 #include <stdlib.h>
-// int bits = 64;
+
 Set *readSet(FILE *read){//ok
   unsigned long long int aux;
   Set *new_set = malloc(sizeof(Set));
@@ -59,7 +59,7 @@ void unionSet(Set *write,Set *read1,Set *read2){
     if(read1->value_max >= read2->value_max){//read1 tem o valor maximo
       write->value_max = read1->value_max;
       write->set = malloc(sizeof(unsigned long long int)*(1+(read1->value_max/64)));
-      for(aux = 0;aux<=read2->value_max/64; aux++){// adiciona os valores restantes ao write a partir do read1
+      for(aux = 0;aux<=read2->value_max/64; aux++){// adiciona os valores ao write a partir do read1 e read2
         write->set[aux] = read1->set[aux] | read2->set[aux];
       }
       for(aux = read2->value_max/64 ;aux<=read1->value_max/64; aux++){// adiciona os valores restantes ao write a partir do read1
