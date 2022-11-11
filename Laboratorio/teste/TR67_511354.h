@@ -8,7 +8,7 @@ typedef struct set{
   int number_elems;
   int value_max;
   float density;
-  int *set;
+  unsigned long long int *set;
 }Set;
 
 // retorna um set * que foi baseado no fb

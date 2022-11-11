@@ -5,7 +5,7 @@
 
 // gcc TR67_511354.c main.c -o teste
 // ./teste SETA_esparso.txt SETB_esparso.txt SETC_esparso.txt SETD_esparso.txt
-// ./teste SETA_denso.txt SETB_denso.txt SETC_esparso.txt SETD_esparso.txt
+// ./teste SETA_denso.txt SETB_denso.txt SETC_denso.txt SETD_denso.txt
 
 int main(int argc, char** argv){
 	FILE* fa = fopen(argv[1], "r"); 

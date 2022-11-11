@@ -9,7 +9,7 @@ typedef struct set{
   int number_elems;
   int value_max;
   float density;
-  int *set;
+  unsigned long long int *set;
 }Set;
 
 // ler o arquivo passado como parametro e retorna um set
