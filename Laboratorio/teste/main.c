@@ -1,7 +1,11 @@
+#include "TR67_511354.h" //isso deve ser mudado para o nome do arquivo com sua matricula.
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "TR67_511354.h" //isso deve ser mudado para o nome do arquivo com sua matricula.
+
+// gcc TR67_511354.c main.c -o teste
+// ./teste SETA_esparso.txt SETB_esparso.txt SETC_esparso.txt SETD_esparso.txt
+// ./teste SETA_denso.txt SETB_denso.txt SETC_esparso.txt SETD_esparso.txt
 
 int main(int argc, char** argv){
 	FILE* fa = fopen(argv[1], "r"); 
