@@ -3,8 +3,8 @@
 #include <math.h>
 
 typedef struct grafo{
-  long long int vertices;
-  long long int arestas;
-  long long int **set;
-  long long int *setgrau;
+  int vertices;
+  int arestas;
+  int **set;
+  int *setgrau;
 }GF;
