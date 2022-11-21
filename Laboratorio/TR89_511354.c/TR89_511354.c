@@ -47,8 +47,12 @@ int intersecSet(GF *grafo,int new,int *solucao){
   }
   return grau;
 }
-
-int* gulosa(GF *grafo){
+// 1
+int* gulosa_inicio(GF *grafo){
+  int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 0; y<=grafo->vertices;y++){
+    setgraucopy[y] = grafo->setgrau[y]; 
+  }
   int *solucao = malloc(sizeof(int)*(grafo->vertices+1));
   for(int y = 1;y<=grafo->vertices;y++){ solucao[y] = 0;} //zerando todos os elementos
   int maior;
@@ -56,24 +60,164 @@ int* gulosa(GF *grafo){
   for(int y = 1;y<=grafo->vertices;y++){
     int maior_grau = 0;
     for(int i = 1;i<=grafo->vertices;i++){//pecorre o vetor procurando o maior grau.
-      if(maior_grau<grafo->setgrau[i]){
-        maior_grau = grafo->setgrau[i];
+      if(maior_grau<setgraucopy[i]){
+        maior_grau = setgraucopy[i];
         maior = i;
       }
     }
     if(y == 1){ //caso seja o primeiro item a adicionar
       solucao[maior] = 1;
       solucao[0] = solucao[0] + 1; //numero de elementos do clique
-      grafo->setgrau[maior] = -1;
+      setgraucopy[maior] = -1;
     }else{
       if(intersecSet(grafo,maior,solucao) != -1){
         solucao[maior] = 1; 
         solucao[0] = solucao[0] + 1;//numero de elementos do clique
       }
-        grafo->setgrau[maior] = -1; //elimina o elemento para nao contar no proximo ciclo
+        setgraucopy[maior] = -1; //elimina o elemento para nao contar no proximo ciclo
     }
   }
     return solucao;
+}
+
+// 2
+int* gulosa_final(GF *grafo){
+  int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 0; y<=grafo->vertices;y++){
+    setgraucopy[y] = grafo->setgrau[y]; 
+  }
+  int *solucao = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 1;y<=grafo->vertices;y++){ solucao[y] = 0;} //zerando todos os elementos
+  int maior;
+
+  for(int y = 1;y<=grafo->vertices;y++){
+    int maior_grau = 0;
+    for(int i = grafo->vertices;i>0;i--){//pecorre o vetor procurando o maior grau.
+      if(maior_grau<setgraucopy[i]){
+        maior_grau = setgraucopy[i];
+        maior = i;
+      }
+    }
+    if(y == 1){ //caso seja o primeiro item a adicionar
+      solucao[maior] = 1;
+      solucao[0] = solucao[0] + 1; //numero de elementos do clique
+      setgraucopy[maior] = -1;
+    }else{
+      if(intersecSet(grafo,maior,solucao) != -1){
+        solucao[maior] = 1; 
+        solucao[0] = solucao[0] + 1;//numero de elementos do clique
+      }
+        setgraucopy[maior] = -1; //elimina o elemento para nao contar no proximo ciclo
+    }
+  }
+    return solucao;
+}
+
+// 3
+int* gulosa_meio_esq(GF *grafo){
+  int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 0; y<=grafo->vertices;y++){
+    setgraucopy[y] = grafo->setgrau[y]; 
+  }
+  int *solucao = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 1;y<=grafo->vertices;y++){ solucao[y] = 0;} //zerando todos os elementos
+  int maior;
+
+  for(int y = 1;y<=grafo->vertices;y++){
+    int maior_grau = 0;
+    for(int i = grafo->vertices/2;i>0;i--){//pecorre o vetor procurando o maior grau.
+      if(maior_grau<setgraucopy[i]){
+        maior_grau = setgraucopy[i];
+        maior = i;
+      }
+    }
+  for(int i = grafo->vertices;i>grafo->vertices/2;i--){//pecorre o vetor procurando o maior grau.
+    if(maior_grau<setgraucopy[i]){
+      maior_grau = setgraucopy[i];
+      maior = i;
+    }
+  }
+    if(y == 1){ //caso seja o primeiro item a adicionar
+      solucao[maior] = 1;
+      solucao[0] = solucao[0] + 1; //numero de elementos do clique
+      setgraucopy[maior] = -1;
+    }else{
+      if(intersecSet(grafo,maior,solucao) != -1){
+        solucao[maior] = 1; 
+        solucao[0] = solucao[0] + 1;//numero de elementos do clique
+      }
+        setgraucopy[maior] = -1; //elimina o elemento para nao contar no proximo ciclo
+    }
+  }
+    return solucao;
+}
+
+// 4
+int* gulosa_meio_dir(GF *grafo){
+  int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 0; y<=grafo->vertices;y++){
+    setgraucopy[y] = grafo->setgrau[y]; 
+  }
+  int *solucao = malloc(sizeof(int)*(grafo->vertices+1));
+  for(int y = 1;y<=grafo->vertices;y++){ solucao[y] = 0;} //zerando todos os elementos
+  int maior;
+
+  for(int y = 1;y<=grafo->vertices;y++){
+    int maior_grau = 0;
+    for(int i = grafo->vertices/2;i<=grafo->vertices;i++){//pecorre o vetor procurando o maior grau.
+      if(maior_grau<setgraucopy[i]){
+        maior_grau = setgraucopy[i];
+        maior = i;
+      }
+    }
+  for(int i = 1;i<grafo->vertices/2;i++){//pecorre o vetor procurando o maior grau.
+    if(maior_grau<setgraucopy[i]){
+      maior_grau = setgraucopy[i];
+      maior = i;
+    }
+  }
+    if(y == 1){ //caso seja o primeiro item a adicionar
+      solucao[maior] = 1;
+      solucao[0] = solucao[0] + 1; //numero de elementos do clique
+      setgraucopy[maior] = -1;
+    }else{
+      if(intersecSet(grafo,maior,solucao) != -1){
+        solucao[maior] = 1; 
+        solucao[0] = solucao[0] + 1;//numero de elementos do clique
+      }
+        setgraucopy[maior] = -1; //elimina o elemento para nao contar no proximo ciclo
+    }
+  }
+    return solucao;
+}
+
+int* maior_clique(GF *grafo){
+  int* solucao1 = gulosa_inicio(grafo);
+  int* solucao2 = gulosa_final(grafo);
+  int* solucao3 = gulosa_meio_esq(grafo);
+  int* solucao4 = gulosa_meio_dir(grafo);
+  int* melhor_solucao;
+  int* melhor_solucao1;
+  int* melhor_solucao2;
+  
+  if(solucao1[0] > solucao2[0]){
+    melhor_solucao1 = solucao1;
+  }else{
+    melhor_solucao1 = solucao2;
+  }
+
+  if(solucao3[0] > solucao4[0]){
+    melhor_solucao2 = solucao3;
+  }else{
+    melhor_solucao2 = solucao4;
+  }
+
+  if(melhor_solucao1[0] > melhor_solucao2[0]){
+    melhor_solucao = melhor_solucao1;
+  }else{
+    melhor_solucao = melhor_solucao2;
+  }
+  return melhor_solucao;
 }
 
 void writeSet(FILE *write, int *read,GF *grafo){
@@ -86,12 +230,12 @@ void writeSet(FILE *write, int *read,GF *grafo){
 }
 
 int main(){
-  FILE *file1 = fopen("grafo.txt","r");
-  FILE *file2 = fopen("result.txt","w");
-  GF *grafo1 = readfile(file1);
+  FILE *file = fopen("hamming6-4.mtx","r");
+  FILE *file1 = fopen("result1.txt","w");
+  GF *grafo1 = readfile(file);
   printf("\nmain:\n%i\n",grafo1->vertices);
   printf("%i\n",grafo1->arestas);
-  writeSet(file2,gulosa(grafo1),grafo1);
+  writeSet(file1,maior_clique(grafo1),grafo1);
   return 0;
 }
 
