@@ -116,12 +116,12 @@ void writeSet(FILE *write, int *read,GF *grafo){
 }
 
 int main(){
-  FILE *file1 = fopen("grafo1.mtx","r");
+  FILE *file1 = fopen("hamming6-4.mtx","r");
   FILE *file2 = fopen("result.txt","w");
   GF *grafo1 = readfile(file1);
-  // printf("clique max:%i\n",max_clique(grafo1));
   printf("\nmain:\n%i\n",grafo1->vertices);
   printf("%i\n",grafo1->arestas);
+  printf("clique max:%i\n",max_clique(grafo1));
   // for(int i = 1;i<=grafo1->vertices; i++){
   // printf("grau %i: %i\n",i,grafo1->setgrau[i]);
   // }
