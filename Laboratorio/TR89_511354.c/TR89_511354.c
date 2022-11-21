@@ -1,7 +1,4 @@
 #include "TR89_511354.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 
 GF *readfile(FILE *read){
   int aux, linha, coluna;
@@ -47,7 +44,7 @@ int intersecSet(GF *grafo,int new,int *solucao){
   }
   return grau;
 }
-// 1
+
 int* gulosa_inicio(GF *grafo){
   int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
   for(int y = 0; y<=grafo->vertices;y++){
@@ -80,7 +77,6 @@ int* gulosa_inicio(GF *grafo){
     return solucao;
 }
 
-// 2
 int* gulosa_final(GF *grafo){
   int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
   for(int y = 0; y<=grafo->vertices;y++){
@@ -113,7 +109,6 @@ int* gulosa_final(GF *grafo){
     return solucao;
 }
 
-// 3
 int* gulosa_meio_esq(GF *grafo){
   int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
   for(int y = 0; y<=grafo->vertices;y++){
@@ -152,7 +147,6 @@ int* gulosa_meio_esq(GF *grafo){
     return solucao;
 }
 
-// 4
 int* gulosa_meio_dir(GF *grafo){
   int *setgraucopy = malloc(sizeof(int)*(grafo->vertices+1));
   for(int y = 0; y<=grafo->vertices;y++){
@@ -192,31 +186,19 @@ int* gulosa_meio_dir(GF *grafo){
 }
 
 int* maior_clique(GF *grafo){
-  int* solucao1 = gulosa_inicio(grafo);
-  int* solucao2 = gulosa_final(grafo);
-  int* solucao3 = gulosa_meio_esq(grafo);
-  int* solucao4 = gulosa_meio_dir(grafo);
-  int* melhor_solucao;
-  int* melhor_solucao1;
-  int* melhor_solucao2;
+  int* solucao1 = gulosa_inicio(grafo); int* solucao2 = gulosa_final(grafo);
+  int* solucao3 = gulosa_meio_esq(grafo); int* solucao4 = gulosa_meio_dir(grafo);
+  int* melhor_solucao; int* melhor_solucao1; int* melhor_solucao2;
+
+  if(solucao1[0] > solucao2[0]){ melhor_solucao1 = solucao1;
+  }else{ melhor_solucao1 = solucao2;}
+
+  if(solucao3[0] > solucao4[0]){ melhor_solucao2 = solucao3;
+  }else{ melhor_solucao2 = solucao4;}
+
+  if(melhor_solucao1[0] > melhor_solucao2[0]){ melhor_solucao = melhor_solucao1;
+  }else{ melhor_solucao = melhor_solucao2;}
   
-  if(solucao1[0] > solucao2[0]){
-    melhor_solucao1 = solucao1;
-  }else{
-    melhor_solucao1 = solucao2;
-  }
-
-  if(solucao3[0] > solucao4[0]){
-    melhor_solucao2 = solucao3;
-  }else{
-    melhor_solucao2 = solucao4;
-  }
-
-  if(melhor_solucao1[0] > melhor_solucao2[0]){
-    melhor_solucao = melhor_solucao1;
-  }else{
-    melhor_solucao = melhor_solucao2;
-  }
   return melhor_solucao;
 }
 
@@ -227,15 +209,5 @@ void writeSet(FILE *write, int *read,GF *grafo){
     fprintf(write,"%i\n",i);
     }
   }
-}
-
-int main(){
-  FILE *file = fopen("hamming6-4.mtx","r");
-  FILE *file1 = fopen("result1.txt","w");
-  GF *grafo1 = readfile(file);
-  printf("\nmain:\n%i\n",grafo1->vertices);
-  printf("%i\n",grafo1->arestas);
-  writeSet(file1,maior_clique(grafo1),grafo1);
-  return 0;
 }
 

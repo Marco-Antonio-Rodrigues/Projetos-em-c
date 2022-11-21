@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 // vertices: numero de elementos no grafo
 // arestas: numero de ligacoes entre elementos do grafo
@@ -30,4 +29,18 @@ int intersecSet(GF *grafo,int new,int *solucao);
 
 // Algoritmo Guloso para tentar encontrar a clique maxima de forma heuristica
 // com grande possibidade de nao ser a clique maxima mas constantemente bem proximo da realidade
-int* gulosa(GF *grafo);
+
+// comeca varrendo do inicio ->
+int* gulosa_inicio(GF *grafo);
+
+// comeca varrendo do final <-
+int* gulosa_final(GF *grafo);
+
+// comeca do meio e pega pra esquerda ^ <-
+int* gulosa_meio_esq(GF *grafo);
+
+// comeca do meio e pega pra direita ^ ->
+int* gulosa_meio_dir(GF *grafo);
+
+// faz o processo pra descobrir qual funcao da gulosa gerou o maior clique.
+int* maior_clique(GF *grafo);
