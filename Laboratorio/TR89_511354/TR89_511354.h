@@ -1,6 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifndef TR89_511354
+#define TR89_511354
+
 // vertices: numero de elementos no grafo
 // arestas: numero de ligacoes entre elementos do grafo
 // **set: ponteiro para ponteiro que forma uma matriz
@@ -24,7 +27,7 @@ void writeSet(FILE *write, int *read,GF *grafo);
 // dos mesmos elementos e assim talvez formando um grafo.
 // retorna -1 se nao
 // retorna o numero de graus/elementos da inseccao se  sim.
-int intersecSet(GF *grafo,int new,int *solucao);
+int intersecSet(GF *grafo,int new, int *solucao);
 
 
 // Algoritmo Guloso para tentar encontrar a clique maxima de forma heuristica
@@ -44,3 +47,5 @@ int* gulosa_meio_dir(GF *grafo);
 
 // faz o processo pra descobrir qual funcao da gulosa gerou o maior clique.
 int* maior_clique(GF *grafo);
+
+#endif
