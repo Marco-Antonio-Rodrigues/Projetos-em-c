@@ -6,16 +6,11 @@ int FunctionComparador(void *x, void *y)
 {
   int ptx = *((int *)x);
   int pty = *((int *)y);
-  if (ptx < pty)
-  {
-    return -1;
-  }
-  else if (ptx > pty)
-  {
+  if (ptx < pty){
     return 1;
-  }
-  else
-  {
+  }else if (ptx > pty){
+    return -1;
+  }else{
     return 0;
   }
 }

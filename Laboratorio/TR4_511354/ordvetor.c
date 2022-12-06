@@ -16,7 +16,7 @@ VETORORD* VETORD_create(int n, COMP* compara){//vetor ordenador na ordem crescen
 
 void VETORD_add(VETORORD* vetor, void* newelem){
 	if(vetor->P < vetor->N){//verifica se o vetor nao esta cheio
-		if (vetor->P == 0){ //caso o vetor ainda esteja vazio
+		if(vetor->P == 0){ //caso o vetor ainda esteja vazio
 			vetor->elems[0] = newelem;
 			vetor->P++;
 		}else{ // adiciona ordenado
@@ -29,8 +29,8 @@ void VETORD_add(VETORORD* vetor, void* newelem){
 				}else{
 					break;
 				}	
-		}
-		vetor->P++;
+			}
+			vetor->P++;
 	}
 }
 }

@@ -6,11 +6,13 @@
 int myCOMP(void* x, void* y){
 	int ptx = *((int*)x);
 	int pty = *((int*)y);
-	if(ptx < pty){
-		return -1;
+	if(ptx < pty){ 
+		return 1;
 	}else{
-		if(ptx > pty) return 1;
-		else return 0;
+		if(ptx > pty){
+			return -1;
+		}else
+			return 0;
 	}
 }
 
