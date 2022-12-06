@@ -40,10 +40,8 @@ int main(){
 	}
 	
 	print(vet->elems, vet->P);
-  
-  	printf("REMOVENDO!");
-  	VETORD_remove(vet);
-  	
+  printf("REMOVENDO!");
+  VETORD_remove(vet);
 	print(vet->elems, vet->P);
    
 	return 0;  

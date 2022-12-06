@@ -19,7 +19,7 @@ void HEAP_add(HEAP* heap, void* newelem){
 		heap->elems[heap->P] = newelem;	// insere no final do heap/vetor
 		int pai;
 		int pos = (int)heap->P;
-		while (pos > 0) {
+		while (pos > 0){
 			pai = (pos-1)/2;
 			if (((heap->comparador)(heap->elems[pai] ,heap->elems[pos])) == 1){
 				void* aux = heap->elems[pos];
@@ -61,7 +61,7 @@ void* HEAP_remove(HEAP* heap){
 					heap->elems[pai] = heap->elems[filho];
 					heap->elems[filho] = aux;
 					printf("\n%i\n",*(int*)aux);
-			 } else{
+			 }else{
   				break;
 			 }
 			 pai = filho;

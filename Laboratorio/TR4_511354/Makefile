@@ -1,5 +1,5 @@
-all:	TR89_511354.o 
-	gcc -o prog_511354 prog_511354.c TR89_511354.o 
+all:	ordvetor.o 
+	gcc -o main main.c ordvetor.o 
 
-TR89_511354.o: TR89_511354.h
-	gcc -c TR89_511354.c 
+ordvetor.o: ordvetor.h
+	gcc -c ordvetor.c 

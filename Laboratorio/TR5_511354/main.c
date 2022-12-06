@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int FunctionComparador(void *x, void *y)
-{
+int FunctionComparador(void *x, void *y){
   int ptx = *((int *)x);
   int pty = *((int *)y);
   if (ptx < pty){
@@ -15,31 +14,23 @@ int FunctionComparador(void *x, void *y)
   }
 }
 
-int elevado(int a, int b)
-{
-  if (b == 0)
-  {
+int elevado(int a, int b){
+  if (b == 0){
     return 1;
-  }
-  else
-  {
+  }else{
     b = b - 1;
     a = a * elevado(a, b);
     return a;
   }
 }
 
-void PrintHeap(HEAP *heap)
-{
+void PrintHeap(HEAP *heap){
   printf("tamanho:%i numero de elementos: %i\n", heap->N, heap->P);
   int c = 0;
-  for (int i = 0; i < 10; i++)
-  {
+  for (int i = 0; i < 10; i++){
     printf("nivel %i:", i);
-    for (int j = 1; j <= elevado(2, i); j++)
-    {
-      if (c < heap->P)
-      {
+    for (int j = 1; j <= elevado(2, i); j++){
+      if (c < heap->P){
         printf("\t%i", *(int *)heap->elems[c]);
         c++;
       }
@@ -47,11 +38,9 @@ void PrintHeap(HEAP *heap)
     printf("\n");
   }
   printf("vetor:");
-  for (int i = 0; i < heap->P; i++)
-  {
+  for (int i = 0; i < heap->P; i++){
     printf("v[%i]=%i  ", i, *(int *)heap->elems[i]);
   }
-
   printf("\n\n\n");
 }
 
@@ -76,15 +65,15 @@ int main(){
   PrintHeap(novoheap);
 
   pont = &n3;
-  HEAP_add(novoheap, pont); // quando comentei aumentou dois
+  HEAP_add(novoheap, pont);
   PrintHeap(novoheap);
 
   pont = &n4;
-  HEAP_add(novoheap, pont); // n serve
+  HEAP_add(novoheap, pont);
   PrintHeap(novoheap);
 
   pont = &n5;
-  HEAP_add(novoheap, pont); // n serve
+  HEAP_add(novoheap, pont);
   PrintHeap(novoheap);
 
   pont = &n6;
@@ -100,9 +89,9 @@ int main(){
   PrintHeap(novoheap);
 
   pont = &n4;
-  HEAP_add(novoheap, pont); // n serve
+  HEAP_add(novoheap, pont);
   PrintHeap(novoheap);
-  //
+
   HEAP_remove(novoheap);
   PrintHeap(novoheap);
 
