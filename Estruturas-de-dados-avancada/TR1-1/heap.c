@@ -2,74 +2,95 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-HEAP* HEAP_create(int n, COMP* compara){
-  HEAP *new_HEAP = malloc(sizeof(HEAP));
+int moveUp(HEAP* heap,int pos){
+	int aux = pos/2;
+	if(aux>=1){
+		if(heap->elems[pos] > heap->elems[aux]){
+			// printf("\nentrou %i %i \n",heap->elems[pos],heap->elems[aux]);
+			int swap = heap->elems[pos];
+			heap->elems[pos] = heap->elems[aux];
+			heap->elems[aux] = swap;
+			moveUp(heap,aux);
+		}
+	}
+}
+
+int moveDown(HEAP* heap,int pos,int n){
+	int aux = 2*pos;
+	if(aux<=n){
+		if(aux<n){
+			if(heap->elems[aux+1] > heap->elems[aux]){
+				aux++;
+		}
+		if(heap->elems[pos] < heap->elems[aux]){
+			int swap = heap->elems[pos];
+			heap->elems[pos] = heap->elems[aux];
+			heap->elems[aux] = swap;
+			moveDown(heap,aux,n);
+		}
+		}
+	}
+}
+
+HEAP* HEAP_build(int* t,int n){
+	HEAP *new_HEAP = malloc(sizeof(HEAP));
 	new_HEAP->N = n;
-	new_HEAP->P = 0;
-	new_HEAP->elems = malloc(sizeof(new_HEAP->elems)*n);
-	new_HEAP->comparador = compara;
-	for(int i=0;i<new_HEAP->N;i++){// garantindo que aponta para NULL
-		new_HEAP->elems[i]=NULL;
+	new_HEAP->P = n;
+	new_HEAP->elems = t;
+	for(int i=n/2;i>=1;i--){
+		moveDown(new_HEAP,i,new_HEAP->N);
 	}
 	return new_HEAP;
 }
 
-void HEAP_add(HEAP* heap, void* newelem){
+void HEAP_add(HEAP* heap, int newelem){
   if(heap->P < heap->N){//verifica se o heap nao esta cheio
-		heap->elems[heap->P] = newelem;	// insere no final do heap/vetor
-		int pai;
-		int pos = (int)heap->P;
-		while (pos > 0){
-			pai = (pos-1)/2;
-			if (((heap->comparador)(heap->elems[pai] ,heap->elems[pos])) == 1){
-				void* aux = heap->elems[pos];
-				heap->elems[pos] = heap->elems[pai];
-				heap->elems[pai] = aux;
-			}else{
-				break;
-			}
-			pos = pai;
-		}
-			heap->P++;
+		heap->elems[heap->P+1] = newelem;	// insere no final do heap/vetor
+		moveUp(heap,(heap->P)+1);
+		heap->P++;
 	}else{
 		printf("ERRO! HEAP CHEIO.");
 	}
 }
 
-void* HEAP_remove(HEAP* heap){
-  void *lixo = NULL;
+int HEAP_remove(HEAP* heap){
+  int lixo;
 	if(heap->P > 0){
-		lixo = heap->elems[0];
-		heap->elems[0] = heap->elems[heap->P-1];
-		heap->elems[heap->P-1] = NULL;
+		lixo = heap->elems[1];
+		heap->elems[1] = heap->elems[heap->P];
+		heap->elems[heap->P] = 0;
 		heap->P--;
-		int pai = 0;
-		int filho_esq, filho_dir, filho;
-		while ((2*pai+1) < heap->P){
-			filho_esq=2*pai+1;
- 			filho_dir=2*pai+2;
-			if (filho_dir >= heap->P){
-				filho_dir=filho_esq;
-			}
-			if (*(int*)heap->elems[filho_esq] < *(int*)heap->elems[filho_dir]){
-   			filho = filho_esq; 
-			}else{
-				filho = filho_dir;
-			}
-			 if (((heap->comparador)(heap->elems[pai],heap->elems[filho])) == 1){
-					void *aux = heap->elems[pai];
-					heap->elems[pai] = heap->elems[filho];
-					heap->elems[filho] = aux;
-					printf("\n%i\n",*(int*)aux);
-			 }else{
-  				break;
-			 }
-			 pai = filho;
-		}  
+		moveDown(heap,1,heap->P);
 		return lixo;
 	}else{
 		printf("ERRO! HEAP VAZIO");
 		return lixo;
+	}
+}
+
+void heapSort(HEAP* heap){
+	int aux = heap->P;
+	while (aux > 1){
+		int swap = heap->elems[1];
+		heap->elems[1] = heap->elems[aux];
+		heap->elems[aux] = swap;
+		aux--;
+		moveDown(heap,1,aux);
+	}
+}
+
+void insertionSort(HEAP* heap){
+	int aux = heap->P;
+	if(aux > 1){
+		for(int i = 2; i <= heap->P;i++){ //for que adiciona
+			for(int j = i;j>1;j--){ //for que ordena
+				if(heap->elems[j-1] > heap->elems[j]){
+					int swap = heap->elems[j-1];
+					heap->elems[j-1] = heap->elems[j];
+					heap->elems[j] = swap;
+				}
+			}
+		}
 	}
 }
 
