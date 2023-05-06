@@ -57,6 +57,7 @@ void heapSort(HEAP* heap);
 
 void insertionSort(HEAP* heap);
 
+HEAP *readfile(FILE *read);
 
 
 #endif

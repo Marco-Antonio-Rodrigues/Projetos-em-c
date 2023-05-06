@@ -94,3 +94,16 @@ void insertionSort(HEAP* heap){
 	}
 }
 
+HEAP *readfile(FILE *read){
+  int aux;
+	fscanf(read,"%i",&aux);
+  int* array = malloc(sizeof(int)*(aux+1));
+	array[0] = aux;
+	// printf("\nentrou %i",array[1]);
+  for(aux = 1 ;aux <= array[0];aux++){  //aux e so pra dizer o numero de vezes de repet faz o preencimento da matriz
+    fscanf(read,"%i ",&array[aux]);
+  }
+	HEAP* newheap = HEAP_build(array,array[0]);
+  return newheap;
+}
+

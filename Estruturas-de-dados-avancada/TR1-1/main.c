@@ -33,15 +33,10 @@ int PrintHeap(HEAP *heap){
   printf("\n\n\n");
 }
 
-int main(){
-  int vetor[2]= {0,2};
-  HEAP* novoheap = HEAP_build(vetor,1);
+int main(int argc,char** argv){
+  FILE* file = fopen(argv[1], "r");
+  HEAP* novoheap = readfile(file);
   PrintHeap(novoheap);
-  // HEAP_remove(novoheap);
-  // HEAP_add(novoheap,3);
-  insertionSort(novoheap);
-  PrintHeap(novoheap);
-
-
+  fclose(file);
   return 0;
 }
