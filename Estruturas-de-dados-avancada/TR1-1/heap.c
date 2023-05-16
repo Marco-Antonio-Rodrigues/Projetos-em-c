@@ -2,33 +2,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int moveUp(HEAP* heap,int pos){
+void moveUp(int *array,int pos){
 	int aux = pos/2;
 	if(aux>=1){
-		if(heap->elems[pos] > heap->elems[aux]){
-			// printf("\nentrou %i %i \n",heap->elems[pos],heap->elems[aux]);
-			int swap = heap->elems[pos];
-			heap->elems[pos] = heap->elems[aux];
-			heap->elems[aux] = swap;
-			moveUp(heap,aux);
+		if(array[pos] > array[aux]){
+			int swap = array[pos];
+			array[pos] = array[aux];
+			array[aux] = swap;
+			moveUp(array,aux);
 		}
 	}
 }
 
-int moveDown(HEAP* heap,int pos,int n){
-	int aux = 2*pos;
-	if(aux<=n){
+void moveDown(int *array,int pos,int n){
+	int aux = 2 * pos;
+	if(aux<= n){
 		if(aux<n){
-			if(heap->elems[aux+1] > heap->elems[aux]){
+			if(array[aux+1] > array[aux]){
 				aux++;
+			}
 		}
-		if(heap->elems[pos] < heap->elems[aux]){
-			int swap = heap->elems[pos];
-			heap->elems[pos] = heap->elems[aux];
-			heap->elems[aux] = swap;
-			moveDown(heap,aux,n);
+		if(array[pos] < array[aux]){
+			int swap = array[pos];
+			array[pos] = array[aux];
+			array[aux] = swap;
+			moveDown(array,aux,n);
 		}
-		}
+	}
+}
+
+void HEAP_arranjar(int *array){
+		for(int i=array[0]/2;i>=1;i--){
+		moveDown(array,i,array[0]);
 	}
 }
 
@@ -37,19 +42,17 @@ HEAP* HEAP_build(int* t,int n){
 	new_HEAP->N = n;
 	new_HEAP->P = n;
 	new_HEAP->elems = t;
-	for(int i=n/2;i>=1;i--){
-		moveDown(new_HEAP,i,new_HEAP->N);
-	}
+	HEAP_arranjar(t);
 	return new_HEAP;
 }
 
 void HEAP_add(HEAP* heap, int newelem){
   if(heap->P < heap->N){//verifica se o heap nao esta cheio
 		heap->elems[heap->P+1] = newelem;	// insere no final do heap/vetor
-		moveUp(heap,(heap->P)+1);
+		moveUp(heap->elems,(heap->P)+1);
 		heap->P++;
 	}else{
-		printf("ERRO! HEAP CHEIO.");
+		printf("\nERRO! HEAP CHEIO.");
 	}
 }
 
@@ -60,10 +63,10 @@ int HEAP_remove(HEAP* heap){
 		heap->elems[1] = heap->elems[heap->P];
 		heap->elems[heap->P] = 0;
 		heap->P--;
-		moveDown(heap,1,heap->P);
+		moveDown(heap->elems,1,heap->P);
 		return lixo;
 	}else{
-		printf("ERRO! HEAP VAZIO");
+		printf("\nERRO! HEAP VAZIO");
 		return lixo;
 	}
 }
@@ -75,7 +78,7 @@ void heapSort(HEAP* heap){
 		heap->elems[1] = heap->elems[aux];
 		heap->elems[aux] = swap;
 		aux--;
-		moveDown(heap,1,aux);
+		moveDown(heap->elems,1,aux);
 	}
 }
 

@@ -20,9 +20,11 @@ typedef struct heap{
 	int* elems;//o vetor de elementos
 }HEAP;
 
-int moveUp(HEAP* heap,int pos);
+void moveUp(int *array,int pos);
 
-int moveDown(HEAP* heap,int pos,int n);
+void moveDown(int *array,int pos,int n);
+
+void HEAP_arranjar(int *array);
 
 /**
 Cria um heap vazio de tamanho n e com funcao de comparacao compara

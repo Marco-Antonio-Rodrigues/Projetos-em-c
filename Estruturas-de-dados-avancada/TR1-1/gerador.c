@@ -21,7 +21,8 @@ int main(int argc,char** argv){
     printf("Digite o tamanho do array: ");
     scanf("%i",&tamanho);
 
-    int array[tamanho+1], intervalo = tamanho+99;
+    int *array = malloc(sizeof(int)* tamanho);
+    int intervalo = tamanho+1000;
 
     // Estrutura de criação da array, a cada número gerado o algoritmo faz a validação 
     // para validar se não há valores iguais, se tiver ele gera outro e repete o processo, 
@@ -34,18 +35,16 @@ int main(int argc,char** argv){
             for (k=1;k<j;k++){  
                 if (newelement == array[k]){
                     igual++;
+                    break; //somente do for
                 }
             }
             if (igual == 0){
                 array[j]=newelement;
+                printf("\nadd %i",j);
                 break;
             }
         } while (1);
     }
-    // imprime a array na tela.
-        for (j=0;j<=tamanho;j++){
-            printf("\t%i",array[j]);
-        }
     writeSet(file,array);
     fclose(file);
   return 0;
