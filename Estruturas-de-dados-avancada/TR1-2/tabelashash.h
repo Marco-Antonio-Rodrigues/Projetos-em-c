@@ -19,7 +19,7 @@ int dobra(int chave,int tam);
 
 int multiplicacao(int chave,int tam);
 
-int *analise_quadradratica(int chave,int tam,int *array);
+int *analise_quadradratica(int *array);
 
 int hash_analise_quadratica(int chave,int casas_dec,int *analise);
 

@@ -1,8 +1,7 @@
 #include "tabelashash.h"
 
 int divisao(int chave,int tam){
-  int hash = chave % tam;
-  return hash;
+  return chave % tam;
 }
 
 char *dobra_soma(char *chave,int tam_chave, int casas_dec){
@@ -46,13 +45,11 @@ int dobra(int chave,int tam){
 }
 
 int multiplicacao(int chave,int tam){
-  float frac = chave * 0.317;
-  return (int)((frac - ((int)frac))*tam);
+  float frac =  (chave * 0.314159)-((int)(chave * 0.314159));
+  return ((int)(frac * tam));
 }
 
-int *analise_quadradratica(int chave,int tam,int *array){
-  int casas_dec = 0,tam_chave = 0;
-  while ((tam-1) > 0){ tam /= 10; casas_dec++;}
+int *analise_quadradratica(int *array){
   int arrayn[10],aux;
   char *digito = malloc(sizeof(char) * 7);
   char *aux_char = malloc(sizeof(char));
@@ -96,7 +93,9 @@ int *analise_quadradratica(int chave,int tam,int *array){
   return analise;
 }
 
-int hash_analise_quadratica(int chave,int casas_dec,int *analise){
+int hash_analise_quadratica(int chave,int tam,int *analise){
+  int casas_dec = 0;
+  while ((tam-1) > 0){ tam /= 10; casas_dec++;}
   char *aux_char = malloc(sizeof(char));
   char *digito = malloc(sizeof(char) * 7);
   char *hash = malloc(sizeof(char) * 7);
@@ -119,9 +118,7 @@ int hash_analise_quadratica(int chave,int casas_dec,int *analise){
     printf("\nfunc hash:%i para chave: %i",hash_final,chave);
 }
 
-int *analise_modular(int chave,int tam,int *array){
-  int casas_dec = 0,tam_chave = 0;
-  while ((tam-1) > 0){ tam /= 10; casas_dec++;}
+int *analise_modular(int *array){
   int arrayn[10],aux;
   char *digito = malloc(sizeof(char) * 7);
   char *aux_char = malloc(sizeof(char));
@@ -169,7 +166,9 @@ int *analise_modular(int chave,int tam,int *array){
   return analise;
 }
 
-int hash_analise_modular(int chave,int casas_dec,int *analise){
+int hash_analise_modular(int chave,int tam,int *analise){
+  int casas_dec = 0;
+  while ((tam-1) > 0){ tam /= 10; casas_dec++;}
   char *aux_char = malloc(sizeof(char));
   char *digito = malloc(sizeof(char) * 7);
   char *hash = malloc(sizeof(char) * 7);
@@ -208,8 +207,8 @@ tabelahash *create_table(int tamanho){
   newtable->tam = tamanho;
   newtable->elem = 0;
   newtable->tabela = malloc(sizeof(int) * 100000);
-  for(int i;i<100000;i++){
-  (newtable->tabela[i]) = NULL;
+  for(int i=0;i<100000;i++){
+  newtable->tabela[i] = -1;
   }
   return newtable;
 }
