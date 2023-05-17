@@ -76,7 +76,6 @@ int *analise_quadradratica(int *array){
   int *analise = malloc(sizeof(int) * 7);
   for(int i=0;i<7;i++){
     analise[i] = i;
-    printf("\ndesvio[%i]: %f",i,desvio[i]);
   }
   for(int i = 0; i < 6;i++){ //for que adiciona
     for(j = i; j < 7;j++){
@@ -90,32 +89,10 @@ int *analise_quadradratica(int *array){
       }
     }
   }
+  // for(int i=0;i<7;i++){// elem d array
+  //   printf("\nanalise[%i]=%i\tdesvio[%i]=%f",i,analise[i],i,desvio[i]);
+  // }
   return analise;
-}
-
-int hash_analise_quadratica(int chave,int tam,int *analise){
-  int casas_dec = 0;
-  while ((tam-1) > 0){ tam /= 10; casas_dec++;}
-  char *aux_char = malloc(sizeof(char));
-  char *digito = malloc(sizeof(char) * 7);
-  char *hash = malloc(sizeof(char) * 7);
-  int hash_final;
-  int copia_analise[7];
-  for(int a = 0;a<7;a++){
-    copia_analise[a] = analise[a];
-  }
-  for(int c = 0;c<casas_dec;c++){    //to o digito primeiro, segundo...
-    for(int g = c;g<7;g++){
-        sprintf(digito, "%i", chave); //num to char
-        if(copia_analise[g] < strlen(digito)){
-          aux_char[c] = digito[copia_analise[g]];
-          copia_analise[g] = 1000;
-          break;
-        }
-    }
-  }
-    hash_final = atoi(aux_char); //char to num
-    printf("\nfunc hash:%i para chave: %i",hash_final,chave);
 }
 
 int *analise_modular(int *array){
@@ -140,7 +117,7 @@ int *analise_modular(int *array){
   if(((arrayn[n])-(((float)array[0])/10)) >= 0){
     desvio[c] =  desvio[c]+((arrayn[n])-(((float)array[0])/10)); 
   }else{
-    desvio[c] =  desvio[c]+((-1.0) * (arrayn[n])-(((float)array[0])/10));
+    desvio[c] =  desvio[c]+((-1) * (arrayn[n])-(((float)array[0])/10));
   }
   }
   }
@@ -149,7 +126,55 @@ int *analise_modular(int *array){
   int *analise = malloc(sizeof(int) * 7);
   for(int i=0;i<7;i++){
     analise[i] = i;
-    printf("\ndesvio[%i]: %f",i,desvio[i]);
+  }
+  for(int i = 0; i < 6;i++){ //for que adiciona
+    for(j = i; j < 7;j++){
+      if(desvio[i] > desvio[j]){
+        swap = desvio[j];
+        desvio[j] = desvio[i];
+        desvio[i] = swap;
+        troca = analise[i];
+        analise[i] = analise[j];
+        analise[j] = troca;
+      }
+    }
+  }
+  // for(int i=0;i<7;i++){// elem d array
+  //   printf("\nanalise[%i]=%i\tdesvio[%i]=%f",i,analise[i],i,desvio[i]);
+  // }
+  return analise;
+}
+
+int *analise_basica(int *array){
+  int arrayn[10],aux;
+  char *digito = malloc(sizeof(char) * 7);
+  char *aux_char = malloc(sizeof(char));
+  float *desvio = malloc(sizeof(float) * 7);
+  for(int c = 0;c<7;c++){    //to o digito primeiro, segundo...
+    for (int n= 0;n<10;n++){//para n 0 a 9
+      arrayn[n] = -1;
+      for(int i=1;i<((array[0])+1);i++){// elem d array
+        sprintf(digito, "%i", array[i]); //num to char
+        if(c < strlen(digito)){
+          aux_char[0] = digito[c];
+          aux = atoi(aux_char); //char to num
+          if(aux == n) {arrayn[n]++;};
+        }
+      }
+    }
+  desvio[c] = 0; 
+  for(int n=0;n<10;n++){//habilitar
+    if(arrayn[n] < 0){
+      arrayn[n] = 0;
+    }
+    desvio[c] =  desvio[c]+ arrayn[n];
+  }
+  }
+  float swap;
+  int troca,j;
+  int *analise = malloc(sizeof(int) * 7);
+  for(int i=0;i<7;i++){
+    analise[i] = i;
   }
   for(int i = 0; i < 6;i++){ //for que adiciona
     for(j = i; j < 7;j++){
@@ -166,7 +191,7 @@ int *analise_modular(int *array){
   return analise;
 }
 
-int hash_analise_modular(int chave,int tam,int *analise){
+int hash_analise(int chave,int tam,int *analise){
   int casas_dec = 0;
   while ((tam-1) > 0){ tam /= 10; casas_dec++;}
   char *aux_char = malloc(sizeof(char));
@@ -186,9 +211,9 @@ int hash_analise_modular(int chave,int tam,int *analise){
           break;
         }
     }
-  }
-    hash_final = atoi(aux_char); //char to num
-    printf("\nfunc hash:%i para chave: %i",hash_final,chave);
+  } 
+  hash_final = atoi(aux_char); //char to num
+  return hash_final;
 }
 
 int *readfile(FILE *read){

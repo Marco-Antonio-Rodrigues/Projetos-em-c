@@ -7,5 +7,6 @@ all:	tabelashash.o
 	./prog array800000.txt
 	./prog array1000000.txt
 
+
 tabelashash.o: tabelashash.h
 	gcc -c tabelashash.c 

@@ -21,11 +21,11 @@ int multiplicacao(int chave,int tam);
 
 int *analise_quadradratica(int *array);
 
-int hash_analise_quadratica(int chave,int casas_dec,int *analise);
+int *analise_modular(int *array);
 
-int *analise_modular(int chave,int tam,int *array);
+int *analise_basica(int *array);
 
-int hash_analise_modular(int chave,int casas_dec,int *analise);
+int hash_analise(int chave,int tam,int *analise);
 
 int *readfile(FILE *read);
 
